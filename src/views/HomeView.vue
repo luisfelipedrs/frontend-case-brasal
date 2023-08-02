@@ -1,18 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+    <div v-if="!userStore.getters.isLoggedIn">nao logado</div>
+    <div v-else>logado, {{ userStore.state.username }}</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import userStore from '@/store/user';
+import { onMounted } from 'vue';
 
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
-});
+export default {
+    name: 'HomeView',
+    setup() {
+        onMounted(userStore.getUser);
+        return { userStore }
+    }
+}
 </script>
