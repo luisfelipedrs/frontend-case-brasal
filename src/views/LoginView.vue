@@ -36,8 +36,9 @@ export default defineComponent({
       })
       .then((response) => {
         localStorage.setItem('token', response.data.token),
-        localStorage.setItem('user', response.data.username)
-        userStore.login(response.data.token, response.data.username),
+        localStorage.setItem('user', response.data.user.username)
+        userStore.login(response.data.token, response.data.user.username),
+        console.log(response)
         router.push('/');
       }, (error) => {
         login.username = '';
@@ -51,4 +52,5 @@ export default defineComponent({
 </script>
 
 <style>
+
 </style>

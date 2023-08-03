@@ -23,20 +23,20 @@
 
 <script>
 import userStore from '@/store/user';
-import { onMounted } from 'vue';
+import { onMounted, defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     name: 'NavBar',
     setup() {
         onMounted(userStore.getUser);
 
         const logout = () => {
-            localStorage.removeItem('token');
+            localStorage.removeItem('token')
             localStorage.removeItem('user');
             userStore.logout();
         }
 
         return { userStore, logout }
     }
-}
+})
 </script>

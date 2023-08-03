@@ -4,10 +4,12 @@
         <h3>Clique aqui para acessar</h3>
         <router-link to="/login" class="nav-link">Login</router-link>
     </div>
+
     <div v-else>
         <div>
             Bem-vindo(a), {{ userStore.state.username }}!
         </div>
+        
         <div >
             <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
@@ -19,7 +21,12 @@
                 <tbody>
                     <tr v-for="(task, i) in tasks" :key="i">
                       <td>{{ task['description'] }}</td>
-                      <td>{{ task['completed'] }}</td>
+                      <div v-if="task['completed'] == false">
+                        <td>Pendente</td>
+                      </div>
+                      <div v-else>
+                        <td>Finalizada</td>
+                      </div>
                     </tr>
                 </tbody>
             </table>
@@ -28,6 +35,9 @@
                 <button @click="handlePageChange(pagination.page + 1)" :disabled="pagination.page === pagination.totalPages">&raquo;</button>
             </div>
         </div>
+
+        <router-link to="/new" class="btn btn-primary w-100 py-2">Criar tarefa</router-link>
+
     </div>
 </template>
 
@@ -56,8 +66,8 @@ export default defineComponent({
         const fetchTasks = () => api.get('/tasks?page=' + pagination.page, { 
             headers: { 'Authorization': 'Bearer ' + userStore.state.token }})
         .then((response) => {
-            tasks.value = response.data.docs,
-            pagination.totalPages = response.data.totalPages
+            tasks.value = response.data.docs;
+            pagination.totalPages = response.data.totalPages;
         })
 
         if (userStore.getters.isLoggedIn) {
