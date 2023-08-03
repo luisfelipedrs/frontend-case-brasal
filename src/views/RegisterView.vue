@@ -7,11 +7,11 @@
         <label for="floatingInput">Usuário</label>
       </div>
       <div class="form-floating">
-        <input v-model="data.password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input v-model="data.password" type="password" class="form-control" placeholder="Password">
         <label for="floatingPassword">Senha</label>
       </div>
       <div class="form-floating">
-        <input v-model="data.confirmPassword" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input v-model="data.confirmPassword" type="password" class="form-control" placeholder="Password">
         <label for="floatingPassword">Confirme sua senha</label>
       </div>
       <button class="btn btn-primary w-100 py-2" type="submit">Enviar</button>
@@ -19,10 +19,11 @@
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import api from '@/services/api';
 
-export default {
+export default defineComponent({
     name: 'RegisterView',
     setup() {
         const data = reactive({
@@ -33,17 +34,22 @@ export default {
 
         const router = useRouter();
 
-        const submit = async () => {
-            await fetch('http://localhost:7070/api/v1/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
+        const submit = async () => api.post('/register', { 
+        username: data.username,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((response) => {
+        router.push('/login');
+      }, (error) => {
+        data.username = '';
+        data.password = '';
+        data.confirmPassword = '';
+        console.log(error);
+      });
 
-            await router.push('/login');
-        }
-
-        return { data, submit }
+      return { data, submit }
     }
-}
+})
 </script>
