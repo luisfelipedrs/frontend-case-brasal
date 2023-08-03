@@ -1,6 +1,8 @@
 <template>
   <NavBar/>
-  <router-view/>
+  <div class="container d-flex justify-content-center align-items-center">
+    <router-view class="view"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,22 +14,12 @@ export default {
 </script>
 
 <style>
-html,
-body {
+.container {
+  width: 100%;
   height: 100%;
 }
 
-.form-signin {
-  max-width: 330px;
-  padding: 1rem;
-}
-
-.form-signin .form-floating:focus-within {
-  z-index: 2;
-}
-
-.form-signin input {
-  margin-bottom: -1px;
-  border-radius: 10px;
+.view {
+  width: 100%;
 }
 </style>

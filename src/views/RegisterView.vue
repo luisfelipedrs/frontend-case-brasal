@@ -14,7 +14,14 @@
         <input v-model="data.confirmPassword" type="password" class="form-control" placeholder="Password">
         <label for="floatingPassword">Confirme sua senha</label>
       </div>
-      <button class="btn btn-primary w-100 py-2" type="submit">Enviar</button>
+      <div class="btn-container">
+        <router-link to="/" class="btn btn-danger delete-btn">Cancelar</router-link>
+        <button class="btn btn-primary" type="submit" 
+        :disabled="(data.username.length < 3) 
+        || (data.password.length < 3)
+        || (data.confirmPassword.length < 3)
+        ">Enviar</button>
+      </div>
     </form>
 </template>
 

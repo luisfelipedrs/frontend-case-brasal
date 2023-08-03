@@ -1,7 +1,8 @@
 <template>
-  <form @submit.prevent="submit">
+
+<form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Login</h1>
-      <div class="form-floating">
+      <div class="form-floating mx-auto">
         <input v-model="login.username" type="text" class="form-control" id="floatingInput" placeholder="Usuário">
         <label for="floatingInput">Usuário</label>
       </div>
@@ -9,8 +10,12 @@
         <input v-model="login.password" type="password" class="form-control" id="floatingPassword" placeholder="Senha">
         <label for="floatingPassword">Senha</label>
       </div>
-      <button class="btn btn-primary w-100 py-2" type="submit">Enviar</button>
+      <div class="btn-container">
+        <router-link to="/" class="btn btn-danger delete-btn">Cancelar</router-link>
+        <button class="btn btn-primary" type="submit" :disabled="(login.username.length < 3) || (login.password.length < 3)">Enviar</button>
+      </div>
     </form>
+
 </template>
 
 <script lang="ts">
@@ -37,7 +42,7 @@ export default defineComponent({
       .then((response) => {
         localStorage.setItem('token', response.data.token),
         localStorage.setItem('user', response.data.user.username)
-        userStore.login(response.data.token, response.data.user.username),
+        userStore.login(response.data.token, response.data.user.user),
         console.log(response)
         router.push('/');
       }, (error) => {
@@ -52,5 +57,21 @@ export default defineComponent({
 </script>
 
 <style>
+.square-box {
+  max-width: 600px;
+  min-height: 600px;
+  border: 1px solid #333;
+}
 
+input {
+  margin-top: 10px;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 30px;
+}
 </style>

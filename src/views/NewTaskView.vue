@@ -1,12 +1,15 @@
 <template>
     <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Nova tarefa</h1>
-
       <div class="form-floating">
         <input v-model="data.description" class="form-control" id="floatingInput" placeholder="text">
         <label for="floatingInput">Descrição</label>
+        <small class="form-text text-muted" :visible="data.description.length < 3">A descrição deve possuir 3 no mínimo caracteres.</small>
       </div>
-      <button class="btn btn-primary w-100 py-2" type="submit">Enviar</button>
+      <div class="btn-container">
+        <router-link to="/" class="btn btn-danger delete-btn">Cancelar</router-link>
+        <button class="btn btn-primary" type="submit" :disabled="data.description.length < 3">Enviar</button>
+      </div>
     </form>
 </template>
 
@@ -44,3 +47,17 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+form {
+    height: 100%;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 30px;
+}
+</style>
