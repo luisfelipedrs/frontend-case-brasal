@@ -23,13 +23,17 @@
                     </tr>
                 </tbody>
             </table>
+            <div className={styles.botoesPaginas}>
+                <button @click="handlePageChange(pagination.page - 1)" :disabled="pagination.page === 1">&laquo;</button>
+                <button @click="handlePageChange(pagination.page + 1)" :disabled="pagination.page === pagination.totalPages">&raquo;</button>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import userStore from '@/store/user';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, reactive } from 'vue';
 import api from '@/services/api';
 
 export default defineComponent({
@@ -39,15 +43,28 @@ export default defineComponent({
 
         const tasks = ref([]);
 
-        const fetchTasks = () => api.get('/tasks', { 
+        const pagination = reactive({
+            page: 1,
+            totalPages: 0
+        });
+
+        const handlePageChange = (newPage: number) => {
+            pagination.page = newPage;
+            fetchTasks();
+        };
+
+        const fetchTasks = () => api.get('/tasks?page=' + pagination.page, { 
             headers: { 'Authorization': 'Bearer ' + userStore.state.token }})
-        .then((response) => tasks.value = response.data.docs);
+        .then((response) => {
+            tasks.value = response.data.docs,
+            pagination.totalPages = response.data.totalPages
+        })
 
         if (userStore.getters.isLoggedIn) {
             onMounted(fetchTasks);
         }
         
-        return { userStore, tasks }
+        return { userStore, tasks, pagination, handlePageChange }
     }
 })
 </script>

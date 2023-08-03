@@ -24,32 +24,32 @@ import { useRouter } from 'vue-router';
 import api from '@/services/api';
 
 export default defineComponent({
-    name: 'RegisterView',
-    setup() {
-        const data = reactive({
-            username: '',
-            password: '',
-            confirmPassword: ''
-        });
+  name: 'RegisterView',
+  setup() {
+    const data = reactive({
+      username: '',
+      password: '',
+      confirmPassword: ''
+    });
 
-        const router = useRouter();
+    const router = useRouter();
 
-        const submit = async () => api.post('/register', { 
-        username: data.username,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .then((response) => {
-        router.push('/login');
-      }, (error) => {
-        data.username = '';
-        data.password = '';
-        data.confirmPassword = '';
-        console.log(error);
-      });
+    const submit = async () => api.post('/register', { 
+      username: data.username,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then(() => {
+      router.push('/login');
+    }, (error) => {
+      data.username = '';
+      data.password = '';
+      data.confirmPassword = '';
+      console.log(error);
+    });
 
-      return { data, submit }
-    }
+    return { data, submit }
+  }
 })
 </script>
