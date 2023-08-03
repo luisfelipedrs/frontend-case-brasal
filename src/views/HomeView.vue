@@ -59,6 +59,7 @@
 import userStore from '@/store/user';
 import { defineComponent, onMounted, ref, reactive } from 'vue';
 import api from '@/services/api';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
     name: 'HomeView',
@@ -95,7 +96,30 @@ export default defineComponent({
             pagination.totalPages = response.data.totalPages;
         })
 
-        const deleteTask = async (id: string) => api.delete('/tasks/' + id, config)
+        const deleteTask = (id: string) => {
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Você não poderá reverter essa ação!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, deletar!'
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        deleteFromDB(id);
+                        Swal.fire(
+                        'Deletado!',
+                        'Sua tarefa foi deletada com sucesso.',
+                        'success'
+                        )
+                    }
+                })
+
+        }
+
+        const deleteFromDB = async (id: string) => api.delete('/tasks/' + id, config)
         .then(() => {
             fetchTasks();
         }, (error) => {
@@ -104,6 +128,13 @@ export default defineComponent({
 
         const updateTask = async (id: string) => api.put('/tasks/' + id, { }, config)
         .then(() => {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Sua tarefa foi finalizada!',
+                showConfirmButton: false,
+                timer: 1500
+            });
             fetchTasks();
         }, (error) => {
         console.log(error);

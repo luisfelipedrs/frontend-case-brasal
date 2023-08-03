@@ -23,6 +23,7 @@ import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import userStore from '@/store/user';
 import api from '@/services/api';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
     name: 'LoginView',
@@ -43,12 +44,23 @@ export default defineComponent({
         localStorage.setItem('token', response.data.token),
         localStorage.setItem('user', response.data.user.username)
         userStore.login(response.data.token, response.data.user.user),
-        console.log(response)
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Login efetuado com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
+        });
         router.push('/');
-      }, (error) => {
+      }, (response) => {
+        const message: string = response.response.data.message
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: message,
+        })
         login.username = '';
         login.password = '';
-        console.log(error);
       });
 
       return { login, userStore, submit }

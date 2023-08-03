@@ -18,6 +18,7 @@ import userStore from '@/store/user';
 import { defineComponent, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/services/api';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
   name: 'NewTaskView',
@@ -38,6 +39,13 @@ export default defineComponent({
 
     const submit = async () => api.post('/tasks', { description: data.description}, config)
     .then(() => {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Tarefa criada com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
+        });
       router.push('/');
     }, (error) => {
       console.log(error);

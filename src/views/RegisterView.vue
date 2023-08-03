@@ -29,6 +29,7 @@
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/services/api';
+import Swal from 'sweetalert2';
 
 export default defineComponent({
   name: 'RegisterView',
@@ -48,12 +49,24 @@ export default defineComponent({
       headers: { 'Content-Type': 'application/json' },
     })
     .then(() => {
+      Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Usuário cadastrado com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
+        });
       router.push('/login');
-    }, (error) => {
+    }, (response) => {
       data.username = '';
       data.password = '';
       data.confirmPassword = '';
-      console.log(error);
+      const message: string = response.response.data.message
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: message,
+        })
     });
 
     return { data, submit }
