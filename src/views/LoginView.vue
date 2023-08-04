@@ -1,6 +1,5 @@
 <template>
-
-<form @submit.prevent="submit">
+  <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Login</h1>
       <div class="form-floating mx-auto">
         <input v-model="login.username" type="text" class="form-control" id="floatingInput" placeholder="Usuário">
@@ -15,7 +14,6 @@
         <button class="btn btn-primary" type="submit" :disabled="(login.username.length < 3) || (login.password.length < 3)">Enviar</button>
       </div>
     </form>
-
 </template>
 
 <script lang="ts">
@@ -49,7 +47,7 @@ export default defineComponent({
             icon: 'success',
             title: 'Login efetuado com sucesso!',
             showConfirmButton: false,
-            timer: 1500
+            timer: 1000
         });
         router.push('/');
       }, (response) => {

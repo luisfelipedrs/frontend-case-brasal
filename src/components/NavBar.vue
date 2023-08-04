@@ -21,7 +21,7 @@
     </nav>
 </template>
 
-<script>
+<script lang="ts">
 import userStore from '@/store/user';
 import { onMounted, defineComponent } from 'vue';
 

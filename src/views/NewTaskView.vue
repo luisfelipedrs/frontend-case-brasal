@@ -1,16 +1,16 @@
 <template>
-    <form @submit.prevent="submit">
+  <form @submit.prevent="submit">
       <h1 class="h3 mb-3 fw-normal">Nova tarefa</h1>
       <div class="form-floating">
         <input v-model="data.description" class="form-control" id="floatingInput" placeholder="text">
         <label for="floatingInput">Descrição</label>
-        <small class="form-text text-muted" :visible="data.description.length < 3">A descrição deve possuir 3 no mínimo caracteres.</small>
+        <small class="form-text text-muted" :visible="data.description.length < 3">A descrição deve possuir no mínimo 3 caracteres.</small>
       </div>
       <div class="btn-container">
         <router-link to="/" class="btn btn-danger delete-btn">Cancelar</router-link>
         <button class="btn btn-primary" type="submit" :disabled="data.description.length < 3">Enviar</button>
       </div>
-    </form>
+  </form>
 </template>
 
 <script lang="ts">
@@ -44,7 +44,7 @@ export default defineComponent({
             icon: 'success',
             title: 'Tarefa criada com sucesso!',
             showConfirmButton: false,
-            timer: 1500
+            timer: 1000
         });
       router.push('/');
     }, (error) => {

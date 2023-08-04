@@ -1,28 +1,28 @@
 <template>
-    <form @submit.prevent="submit">
-      <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
+  <form @submit.prevent="submit">
+    <h1 class="h3 mb-3 fw-normal">Cadastre-se</h1>
 
-      <div class="form-floating">
-        <input v-model="data.username" class="form-control" id="floatingInput" placeholder="text">
-        <label for="floatingInput">Usuário</label>
-      </div>
-      <div class="form-floating">
-        <input v-model="data.password" type="password" class="form-control" placeholder="Password">
-        <label for="floatingPassword">Senha</label>
-      </div>
-      <div class="form-floating">
-        <input v-model="data.confirmPassword" type="password" class="form-control" placeholder="Password">
-        <label for="floatingPassword">Confirme sua senha</label>
-      </div>
-      <div class="btn-container">
-        <router-link to="/" class="btn btn-danger delete-btn">Cancelar</router-link>
-        <button class="btn btn-primary" type="submit" 
-        :disabled="(data.username.length < 3) 
-        || (data.password.length < 3)
-        || (data.confirmPassword.length < 3)
-        ">Enviar</button>
-      </div>
-    </form>
+    <div class="form-floating">
+      <input v-model="data.username" class="form-control" id="floatingInput" placeholder="text">
+      <label for="floatingInput">Usuário</label>
+    </div>
+    <div class="form-floating">
+      <input v-model="data.password" type="password" class="form-control" placeholder="Password">
+      <label for="floatingPassword">Senha</label>
+    </div>
+    <div class="form-floating">
+      <input v-model="data.confirmPassword" type="password" class="form-control" placeholder="Password">
+      <label for="floatingPassword">Confirme sua senha</label>
+    </div>
+    <div class="btn-container">
+      <router-link to="/" class="btn btn-danger delete-btn">Cancelar</router-link>
+      <button class="btn btn-primary" type="submit" 
+      :disabled="(data.username.length < 3) 
+      || (data.password.length < 3)
+      || (data.confirmPassword.length < 3)
+      ">Enviar</button>
+    </div>
+  </form>
 </template>
 
 <script lang="ts">
@@ -49,13 +49,13 @@ export default defineComponent({
       headers: { 'Content-Type': 'application/json' },
     })
     .then(() => {
-      Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Usuário cadastrado com sucesso!',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Usuário cadastrado com sucesso!',
+                showConfirmButton: false,
+                timer: 1000
+            });
       router.push('/login');
     }, (response) => {
       data.username = '';
@@ -63,9 +63,9 @@ export default defineComponent({
       data.confirmPassword = '';
       const message: string = response.response.data.message
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: message,
+            icon: 'error',
+            title: 'Oops...',
+            text: message,
         })
     });
 
