@@ -1,24 +1,24 @@
-# frontend-case-brasal
+## ❯ Projeto
 
-## Project setup
-```
+Desenvolvimento do frontend para uma aplicação de gerenciamento de tarefas com endpoints para criar, deletar, atualizar e ler, além dos endpoints de login e registro de usuários.
+
+### Tecnologias utilizadas
+
+- Typescript
+- Vue 3
+- Bootstrap
+- SweetAlert2
+
+## ❯ Começando
+
+### Step 1: Configurar ambiente e instalar dependências
+
+```bash
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
+### Step 2: Subir aplicação
+
+```bash
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
